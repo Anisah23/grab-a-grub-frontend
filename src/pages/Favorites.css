@@ -1,0 +1,221 @@
+.favorites {
+  padding: 2rem 0;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #faf8f5 0%, #f5f0e8 100%);
+}
+
+.favorites-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.favorites-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.05) 0%, rgba(210, 180, 140, 0.05) 100%);
+  z-index: 0;
+}
+
+.favorites-header > div {
+  position: relative;
+  z-index: 1;
+}
+
+.favorites-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #5d4037;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.favorites-header h1::before {
+  content: '❤️';
+  font-size: 2.5rem;
+}
+
+.favorites-header p {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin: 0.5rem 0 0 0;
+  font-weight: 500;
+}
+
+.favorites-stats {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: #f5deb3;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+}
+
+.favorites-stats h3 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.favorites-stats p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.favorites-content {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.favorite-item {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.favorite-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.favorite-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+}
+
+.remove-favorite {
+  background: linear-gradient(135deg, #cd853f, #a0522d);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(205, 133, 63, 0.3);
+}
+
+.remove-favorite:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(205, 133, 63, 0.4);
+}
+
+.no-favorites {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #95a5a6;
+  background: linear-gradient(135deg, #f8f9fa, #ecf0f1);
+  border-radius: 20px;
+  border: 2px dashed #bdc3c7;
+}
+
+.no-favorites i {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  color: #cd853f;
+  opacity: 0.6;
+}
+
+.no-favorites h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #7f8c8d;
+  font-weight: 600;
+}
+
+.no-favorites p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.not-logged-in {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.not-logged-in h2 {
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .favorites {
+    padding: 1rem 0;
+  }
+  
+  .favorites-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .favorites-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .favorites-content {
+    padding: 1.5rem;
+  }
+  
+  .favorites-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .no-favorites {
+    padding: 3rem 1.5rem;
+  }
+  
+  .no-favorites h3 {
+    font-size: 1.6rem;
+  }
+}
