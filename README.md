@@ -1,13 +1,79 @@
-# React + Vite
+# Grab a Grub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my Phase 4 project - a recipe sharing app where people can post their recipes and interact with others. I built it because I love cooking and wanted to create something that brings food lovers together.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- You can create, edit, and delete your recipes
+- Browse through other people's recipes
+- Like and comment on recipes you enjoy
+- Save recipes to your favorites
+- Get notifications when people interact with your stuff
+- Works on mobile and desktop
 
-## Expanding the ESLint configuration
+## Tech I used
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# grab-a-grub-frontend
+**Frontend:**
+- React with Vite (way faster than Create React App)
+- React Router for navigation
+- Formik and Yup for forms and validation
+- Axios for API calls
+- Just regular CSS (no frameworks needed)
+
+**Backend:**
+- Flask with Python
+- SQLAlchemy for the database
+- PostgreSQL
+
+## How to run it
+
+
+
+
+git clone 
+cd grab-a-grub-frontend
+npm install
+npm run dev
+
+
+Then go to http://localhost:5173
+
+Make sure your backend is running on port 5000, or change the proxy in vite.config.js if it's different.
+
+## How to use it
+
+Sign up with a username, email, and password. Then you can:
+- Browse recipes on the dashboard
+- Search for specific ingredients or recipe names
+- Like and comment on recipes
+- Create your own recipes with ingredients and instructions
+- Save recipes to favorites
+- Check out other users' profiles
+
+The main pages are:
+- `/` - Home page
+- `/dashboard` - All recipes with search
+- `/my-recipes` - Your recipes
+- `/favorites` - Saved recipes
+- `/profile` - Your profile settings
+
+
+## What I learned
+
+This was my first time building a full-stack app with user authentication and real-time features. I learned a lot about:
+- Managing state with React Context
+- Form validation with Formik and Yup
+- Building responsive layouts with CSS Grid and Flexbox
+- Handling user sessions and authentication
+- Creating a good user experience with loading states and error handling
+
+## Challenges I faced
+
+The notification system was tricky to get right. I had to figure out how to update the notification count in real-time and handle different types of notifications (likes, comments, etc.).
+
+Also spent way too much time on the CSS animations, but I think they make the app feel more polished.
+
+
+## License
+
+MIT License 
