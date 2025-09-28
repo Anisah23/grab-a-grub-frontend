@@ -191,6 +191,26 @@
   box-shadow: 0 16px 45px rgba(139, 69, 19, 0.2), 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
+.no-profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 3rem;
+  border: 4px solid #ffffff;
+  box-shadow: 0 12px 35px rgba(139, 69, 19, 0.15), 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.no-profile-pic:hover {
+  transform: scale(1.05);
+  box-shadow: 0 16px 45px rgba(139, 69, 19, 0.2), 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
 .profile-name {
   font-size: 2.8rem;
   font-weight: 800;

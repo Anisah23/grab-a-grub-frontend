@@ -114,13 +114,16 @@ const Profile = () => {
             <div className="profile-top">
               <div className="profile-left">
                 <div className="profile-picture">
-                  <img 
-                    src={user.profile_picture || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150`} 
-                    alt={user.username}
-                    onError={(e) => {
-                      e.target.src = `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150`;
-                    }}
-                  />
+                  {user.profile_picture ? (
+                    <img 
+                      src={user.profile_picture} 
+                      alt={user.username}
+                    />
+                  ) : (
+                    <div className="no-profile-pic">
+                      <i className="fas fa-user"></i>
+                    </div>
+                  )}
                 </div>
                 
                 {user.bio ? (
