@@ -71,20 +71,22 @@ const Profile = () => {
       <div className="container">
         <div className="profile-header">
           <h1>My Profile</h1>
-          <button 
-            onClick={() => {
-              setEditing(true);
-              setTimeout(() => {
-                document.querySelector('.profile-form')?.scrollIntoView({ 
-                  behavior: 'smooth', 
-                  block: 'start' 
-                });
-              }, 100);
-            }}
-            className="btn btn-secondary"
-          >
-            Edit Profile
-          </button>
+          {!editing && (
+            <button 
+              onClick={() => {
+                setEditing(true);
+                setTimeout(() => {
+                  document.querySelector('.profile-form')?.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                  });
+                }, 100);
+              }}
+              className="btn btn-secondary"
+            >
+              Edit Profile
+            </button>
+          )}
         </div>
 
         {message && (
