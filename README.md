@@ -2,8 +2,8 @@
 Grab-a-Grub is a full-stack recipe sharing platform that connects food lovers through interactive features. Built with React (Vite) on the frontend and Flask + SQLite on the backend
 
 ## Live Demo
-**Frontend:** https://grab-a-grub-frontend.onrender.com/
-**Backend API:** https://grab-a-grub-backend.onrender.com/
+1. Frontend: https://grab-a-grub-frontend.onrender.com/
+2. Backend API: https://grab-a-grub-backend.onrender.com/
 
 ## Backend repository
 https://github.com/Anisah23/grab-a-grub-backend
