@@ -3,7 +3,7 @@ Grab-a-Grub is a full-stack recipe sharing platform that connects food lovers th
 
 ## Live Demo
 **Frontend:** https://grab-a-grub-frontend.onrender.com/
-**Backend API:** 
+**Backend API:** https://grab-a-grub-backend.onrender.com/
 
 ## Backend repository
 https://github.com/Anisah23/grab-a-grub-backend
