@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from '../api/axios';
 import RecipeCard from '../components/RecipeCard';
 import RecipeForm from '../components/RecipeForm';
+import Modal from '../components/Modal';
 import './MyRecipes.css';
 
 const MyRecipes = () => {
@@ -12,6 +13,10 @@ const MyRecipes = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingRecipe, setEditingRecipe] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [recipeToDelete, setRecipeToDelete] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -40,15 +45,22 @@ const MyRecipes = () => {
     setShowForm(true);
   };
 
-  const handleDeleteRecipe = async (recipeId) => {
-    if (window.confirm('Are you sure you want to delete this recipe?')) {
-      try {
-        await axios.delete(`/api/recipes/${recipeId}`);
-        setRecipes(recipes.filter(recipe => recipe.id !== recipeId));
-      } catch (error) {
-        console.error('Error deleting recipe:', error);
-        alert('Error deleting recipe');
-      }
+  const handleDeleteRecipe = (recipe) => {
+    setRecipeToDelete(recipe);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await axios.delete(`/api/recipes/${recipeToDelete.id}`);
+      setRecipes(recipes.filter(recipe => recipe.id !== recipeToDelete.id));
+      setShowDeleteModal(false);
+      setRecipeToDelete(null);
+    } catch (error) {
+      console.error('Error deleting recipe:', error);
+      setErrorMessage('Error deleting recipe. Please try again.');
+      setShowDeleteModal(false);
+      setShowErrorModal(true);
     }
   };
 
@@ -118,7 +130,7 @@ const MyRecipes = () => {
                     <i className="fas fa-edit"></i> Edit
                   </button>
                   <button 
-                    onClick={() => handleDeleteRecipe(recipe.id)}
+                    onClick={() => handleDeleteRecipe(recipe)}
                     className="btn btn-danger btn-small"
                   >
                     <i className="fas fa-trash"></i> Delete
@@ -136,6 +148,23 @@ const MyRecipes = () => {
             onSuccess={handleFormSuccess}
           />
         )}
+
+        <Modal
+          isOpen={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={confirmDelete}
+          title="Delete Recipe"
+          message={`Are you sure you want to delete "${recipeToDelete?.title}"? This action cannot be undone.`}
+          type="confirm"
+        />
+
+        <Modal
+          isOpen={showErrorModal}
+          onClose={() => setShowErrorModal(false)}
+          title="Error"
+          message={errorMessage}
+          type="alert"
+        />
       </div>
     </div>
   );

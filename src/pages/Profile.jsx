@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useUser } from '../contexts/UserContext';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from '../api/axios';
@@ -9,14 +9,13 @@ const ProfileSchema = Yup.object().shape({
   username: Yup.string().min(3, 'Username must be at least 3 characters').required('Username is required'),
   email: Yup.string().email('Invalid email format').required('Email is required'),
   bio: Yup.string().max(500, 'Bio must be less than 500 characters'),
-  profile_picture: Yup.string().url('Must be a valid URL'),
 });
 
 const Profile = () => {
   const { user, updateUser } = useUser();
   const [editing, setEditing] = useState(false);
   const [message, setMessage] = useState('');
-  const [uploadMode, setUploadMode] = useState(false);
+  const [uploadMode, setUploadMode] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -37,7 +36,7 @@ const Profile = () => {
     try {
       let response;
       
-      if (uploadMode && selectedFile) {
+      if (selectedFile) {
         const formData = new FormData();
         formData.append('username', values.username);
         formData.append('email', values.email);
@@ -51,8 +50,7 @@ const Profile = () => {
         response = await axios.patch(`/api/users/${user.id}`, {
           username: values.username,
           email: values.email,
-          bio: values.bio || '',
-          profile_picture: values.profile_picture || ''
+          bio: values.bio || ''
         });
       }
       
@@ -74,10 +72,18 @@ const Profile = () => {
         <div className="profile-header">
           <h1>My Profile</h1>
           <button 
-            onClick={() => setEditing(!editing)}
+            onClick={() => {
+              setEditing(true);
+              setTimeout(() => {
+                document.querySelector('.profile-form')?.scrollIntoView({ 
+                  behavior: 'smooth', 
+                  block: 'start' 
+                });
+              }, 100);
+            }}
             className="btn btn-secondary"
           >
-            {editing ? 'Cancel Editing' : 'Edit Profile'}
+            Edit Profile
           </button>
         </div>
 
@@ -87,33 +93,54 @@ const Profile = () => {
           </div>
         )}
 
-        <div className="profile-content">
-          <div className="profile-sidebar">
-            <div className="profile-picture">
-              <img 
-                src={user.profile_picture || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150`} 
-                alt={user.username}
-                onError={(e) => {
-                  e.target.src = `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150`;
-                }}
-              />
+        <div className="profile-stats-container">
+          <div className="profile-stats">
+            <h3>Stats</h3>
+            <div className="stat">
+              <i className="fas fa-book"></i>
+              <span>Recipes: {user.recipe_count || 0}</span>
+            </div>
+            <div className="stat">
+              <i className="fas fa-user-clock"></i>
+              <span>Member since: {new Date(user.created_at).toLocaleDateString()}</span>
             </div>
           </div>
+        </div>
 
+        <div className="profile-content">
           <div className="profile-main">
-            <div className="profile-stats">
-              <h3>Stats</h3>
-              <div className="stat">
-                <i className="fas fa-book"></i>
-                <span>Recipes: {user.recipe_count || 0}</span>
+            <div className="profile-top">
+              <div className="profile-left">
+                <div className="profile-picture">
+                  <img 
+                    src={user.profile_picture || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150`} 
+                    alt={user.username}
+                    onError={(e) => {
+                      e.target.src = `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150`;
+                    }}
+                  />
+                </div>
+                
+                {user.bio ? (
+                  <div className="profile-bio">
+                    <h3>About Me</h3>
+                    <p>{user.bio}</p>
+                  </div>
+                ) : (
+                  <div className="profile-bio">
+                    <h3>About Me</h3>
+                    <p className="no-bio">No bio yet. Add one to tell the community about yourself!</p>
+                  </div>
+                )}
               </div>
-              <div className="stat">
-                <i className="fas fa-user-clock"></i>
-                <span>Member since: {new Date(user.created_at).toLocaleDateString()}</span>
+              
+              <div className="profile-info">
+                <h2 className="profile-name">{user.username}</h2>
+                <p className="profile-email">{user.email}</p>
               </div>
             </div>
             
-            {editing ? (
+            {editing && (
               <Formik
                 initialValues={{
                   username: user.username || '',
@@ -145,43 +172,14 @@ const Profile = () => {
 
                     <div className="form-group">
                       <label className="form-label">Profile Picture</label>
-                      <div style={{marginBottom: '10px'}}>
-                        <button 
-                          type="button" 
-                          className={`btn ${!uploadMode ? 'btn-primary' : 'btn-secondary'}`}
-                          onClick={() => setUploadMode(false)}
-                          style={{marginRight: '10px'}}
-                        >
-                          URL
-                        </button>
-                        <button 
-                          type="button" 
-                          className={`btn ${uploadMode ? 'btn-primary' : 'btn-secondary'}`}
-                          onClick={() => setUploadMode(true)}
-                        >
-                          Upload File
-                        </button>
-                      </div>
-                      
-                      {uploadMode ? (
-                        <>
-                          <input 
-                            type="file" 
-                            className="form-input" 
-                            accept="image/*"
-                            onChange={handleFileChange}
-                          />
-                          {selectedFile && (
-                            <small style={{color: '#28a745'}}>Selected: {selectedFile.name}</small>
-                          )}
-                        </>
-                      ) : (
-                        <Field 
-                          type="text" 
-                          name="profile_picture" 
-                          className="form-input" 
-                          placeholder="Enter image URL (optional)" 
-                        />
+                      <input 
+                        type="file" 
+                        className="form-input" 
+                        accept="image/*"
+                        onChange={handleFileChange}
+                      />
+                      {selectedFile && (
+                        <small style={{color: '#28a745'}}>Selected: {selectedFile.name}</small>
                       )}
                     </div>
 
@@ -215,25 +213,6 @@ const Profile = () => {
                   </Form>
                 )}
               </Formik>
-            ) : (
-              <div className="profile-info">
-                <div className="profile-header-info">
-                  <h2 className="profile-name">{user.username}</h2>
-                  <p className="profile-email">{user.email}</p>
-                </div>
-                
-                {user.bio ? (
-                  <div className="profile-bio">
-                    <h3>About Me</h3>
-                    <p>{user.bio}</p>
-                  </div>
-                ) : (
-                  <div className="profile-bio">
-                    <h3>About Me</h3>
-                    <p className="no-bio">No bio yet. Add one to tell the community about yourself!</p>
-                  </div>
-                )}
-              </div>
             )}
           </div>
         </div>
